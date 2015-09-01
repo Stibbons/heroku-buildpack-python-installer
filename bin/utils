@@ -31,6 +31,10 @@ set-env() {
   echo "export $1=$2" >> $PROFILE_PATH
 }
 
+set-export() {
+  echo "export $1=$2" >> $EXPORT_PATH
+}
+
 # Usage: $ set-default-env key value
 set-default-env() {
   echo "export $1=\${$1:-$2}" >> $PROFILE_PATH
