@@ -108,14 +108,14 @@ BUILD_DIR=$APP_DIR
 echo "-----> ORIG_BUILD_DIR=$ORIG_BUILD_DIR"
 
 # Prepend proper path buildpack use.
-export PATH=$ORIG_BUILD_DIR/.heroku/python/bin:$ORIG_BUILD_DIR/.heroku/vendor/bin:$PATH
+export PATH=$BUILD_DIR/.heroku/python/bin:$BUILD_DIR/.heroku/vendor/bin:$PATH
 export PYTHONUNBUFFERED=1
 export LANG=en_US.UTF-8
-export C_INCLUDE_PATH=/app/.heroku/vendor/include:$ORIG_BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
-export CPLUS_INCLUDE_PATH=/app/.heroku/vendor/include:$ORIG_BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
-export LIBRARY_PATH=/app/.heroku/vendor/lib:$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
-export LD_LIBRARY_PATH=/app/.heroku/vendor/lib:$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
-export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$ORIG_BUILD_DIR/.heroku/vendor/lib/pkg-config:/app/.heroku/python/lib/pkg-config
+export C_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
+export CPLUS_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
+export LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
+export LD_LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
+export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$BUILD_DIR/.heroku/vendor/lib/pkg-config:/app/.heroku/python/lib/pkg-config
 
 # Switch to the repo's context.
 cd $APP_DIR$SUB_DIR
@@ -230,12 +230,13 @@ set-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-env PYTHONUNBUFFERED true
 set-env PYTHONHOME /app/.heroku/python
 set-env LIBRARY_PATH '/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LIBRARY_PATH'
-set-export PATH "$BUILD_DIR/.heroku/python/bin:\$PATH"
+# Write the "export" file with paths like when they will be after the latest 'deep-mv'
+set-export PATH "$ORIG_BUILD_DIR/.heroku/python/bin:\$PATH"
 set-export PYTHONUNBUFFERED true
-set-export PYTHONHOME "$BUILD_DIR/.heroku/python"
-set-export PYTHONPATH "$BUILD_DIR/.heroku/python/lib/python2.7/site-packages/:$BUILD_DIR/.heroku/python/lib:$BUILD_DIR/.heroku/python/"
-set-export LIBRARY_PATH "$BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib:\$LIBRARY_PATH"
-set-export LD_LIBRARY_PATH "$BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib:\$LD_LIBRARY_PATH"
+set-export PYTHONHOME "$ORIG_BUILD_DIR/.heroku/python"
+set-export PYTHONPATH "$ORIG_BUILD_DIR/.heroku/python/lib/python2.7/site-packages/:$ORIG_BUILD_DIR/.heroku/python/lib:$ORIG_BUILD_DIR/.heroku/python/"
+set-export LIBRARY_PATH "$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib:\$LIBRARY_PATH"
+set-export LD_LIBRARY_PATH "$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib:\$LD_LIBRARY_PATH"
 set-default-env LANG en_US.UTF-8
 set-default-env PYTHONHASHSEED random
 set-default-env PYTHONPATH /app/
