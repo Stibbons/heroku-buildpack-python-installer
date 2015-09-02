@@ -22,11 +22,12 @@ if [[ ! -z $4 ]]; then
 else
     SUB_DIR=""
 fi
-echo "-----> ROOT_DIR=$ROOT_DIR"
-echo "-----> BUILD_DIR=$BUILD_DIR"
+echo "-----> BIN_DIR=$BIN_DIR"     # /tmp/buildpackgxoEQ/bin
+echo "-----> ROOT_DIR=$ROOT_DIR"   # /tmp/buildpackgxoEQ
+echo "-----> BUILD_DIR=$BUILD_DIR" # /tmp/build_57c17093de9cac714bf607cc0827c297/Stibbons-Squirrel-1c5b6d9
 echo "-----> CACHE_DIR=$CACHE_DIR"
 echo "-----> ENV_DIR=$ENV_DIR"
-echo "-----> SUB_DIR=$SUB_DIR"
+echo "-----> SUB_DIR=$SUB_DIR"     # backend
 
 
 CACHED_DIRS=".heroku"
@@ -82,6 +83,9 @@ source $BIN_DIR/utils
 APP_DIR='/app'
 TMP_APP_DIR=$CACHE_DIR/tmp_app_dir
 
+echo "-----> APP_DIR=$APP_DIR"
+echo "-----> TMP_APP_DIR=$TMP_APP_DIR"
+
 # Copy Anvil app dir to temporary storage...
 bpwatch start anvil_appdir_stage
   if [ "$SLUG_ID" ]; then
@@ -101,15 +105,17 @@ bpwatch stop appdir_stage
 ORIG_BUILD_DIR=$BUILD_DIR
 BUILD_DIR=$APP_DIR
 
+echo "-----> ORIG_BUILD_DIR=$ORIG_BUILD_DIR"
+
 # Prepend proper path buildpack use.
-export PATH=$BUILD_DIR/.heroku/python/bin:$BUILD_DIR/.heroku/vendor/bin:$PATH
+export PATH=$ORIG_BUILD_DIR/.heroku/python/bin:$ORIG_BUILD_DIR/.heroku/vendor/bin:$PATH
 export PYTHONUNBUFFERED=1
 export LANG=en_US.UTF-8
-export C_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
-export CPLUS_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
-export LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
-export LD_LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
-export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$BUILD_DIR/.heroku/vendor/lib/pkg-config:/app/.heroku/python/lib/pkg-config
+export C_INCLUDE_PATH=/app/.heroku/vendor/include:$ORIG_BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
+export CPLUS_INCLUDE_PATH=/app/.heroku/vendor/include:$ORIG_BUILD_DIR/.heroku/vendor/include:/app/.heroku/python/include
+export LIBRARY_PATH=/app/.heroku/vendor/lib:$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
+export LD_LIBRARY_PATH=/app/.heroku/vendor/lib:$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib
+export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$ORIG_BUILD_DIR/.heroku/vendor/lib/pkg-config:/app/.heroku/python/lib/pkg-config
 
 # Switch to the repo's context.
 cd $APP_DIR$SUB_DIR
