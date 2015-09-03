@@ -235,8 +235,8 @@ set-export PATH "$ORIG_BUILD_DIR/.heroku/python/bin:\$PATH"
 set-export PYTHONUNBUFFERED true
 set-export PYTHONHOME "$ORIG_BUILD_DIR/.heroku/python"
 set-export PYTHONPATH "$ORIG_BUILD_DIR/.heroku/python/lib/python2.7/site-packages/:$ORIG_BUILD_DIR/.heroku/python/lib:$ORIG_BUILD_DIR/.heroku/python/"
-set-export LIBRARY_PATH "$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib:\$LIBRARY_PATH"
-set-export LD_LIBRARY_PATH "$ORIG_BUILD_DIR/.heroku/vendor/lib:/app/.heroku/python/lib:\$LD_LIBRARY_PATH"
+set-export LIBRARY_PATH "$ORIG_BUILD_DIR/.heroku/vendor/lib:$ORIG_BUILD_DIR/.heroku/python/lib:\$LIBRARY_PATH"
+set-export LD_LIBRARY_PATH "$ORIG_BUILD_DIR/.heroku/vendor/lib:$ORIG_BUILD_DIR/.heroku/python/lib:\$LD_LIBRARY_PATH"
 set-default-env LANG en_US.UTF-8
 set-default-env PYTHONHASHSEED random
 set-default-env PYTHONPATH /app/
