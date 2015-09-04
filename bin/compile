@@ -229,7 +229,8 @@ fi
 set-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-env PYTHONUNBUFFERED true
 set-env PYTHONHOME /app/.heroku/python
-set-env LIBRARY_PATH '/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LIBRARY_PATH'
+set-env LIBRARY_PATH '/app/.heroku/vendor/lib:/app/.heroku/python/lib'
+set-env LD_LIBRARY_PATH '/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LD_LIBRARY_PATH'
 # Write the "export" file with paths like when they will be after the latest 'deep-mv'
 set-export PATH "$ORIG_BUILD_DIR/.heroku/python/bin:\$PATH"
 set-export PYTHONUNBUFFERED true
